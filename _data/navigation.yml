@@ -1,0 +1,6 @@
+header:
+  - titles:
+      # @start locale config
+      en      : &EN       About
+      # @end locale config
+    url: /about.html
