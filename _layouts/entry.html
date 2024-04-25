@@ -1,0 +1,8 @@
+---
+layout: page
+---
+{% assign entry = page.data %}
+
+This text was translated by <b>{{entry.translator}}</b>. It was published by <b>{{entry.publisher}}</b> in <b>{{entry.place}}</b> in the year <b>{{entry.year}}</b>. It is archived by the Yiddish Book Center as <a href="https://www.yiddishbookcenter.org/collections/yiddish-books/spb-{{entry.nybc_id}}">{{entry.nybc_id}}</a>.<br><br>
+
+It is a translation of the work <b><a href="https://www.wikidata.org/wiki/{{entry.wikidata}}">{{entry.o_title}}</a></b> by <b>{{entry.author}}</b>, the original language of which was <b>{{entry.o_language}}</b>.
