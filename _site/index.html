@@ -228,7 +228,7 @@
       version: '2.2.6',
       sources: {
         font_awesome: 'https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.1/css/all.css',
-        jquery: '',
+        jquery: 'https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js',
         leancloud_js_sdk: '//cdn.jsdelivr.net/npm/leancloud-storage@3.13.2/dist/av-min.js',
         chart: 'https://cdn.bootcss.com/Chart.js/2.7.2/Chart.bundle.min.js',
         gitalk: {
@@ -317,7 +317,7 @@
   </g>
 </svg>
 <a title="" href="/">Database of Translations into Yiddish</a></div></div><nav class="navigation">
-        <ul><li class="navigation__item"><a href="/about.html">About</a></li><li class="navigation__item"><a href="/visualizations.html">Visualizations</a></li></ul>
+        <ul><li class="navigation__item"><a href="/about.html">About</a></li></ul>
       </nav></div>
   </header>
 </div><div class="page__content"><div class ="main"><div class="grid grid--reverse">
@@ -411,43 +411,61 @@ $("tr td:nth-child(18)")
 
 		var jsonData = $.getJSON("./assets/db/working.json", function(data) {
 			var json = jsonData.responseJSON
-			for (entry in jsonData.responseJSON){
-			    id = jsonData.responseJSON[entry]['id'];
-			    title = jsonData.responseJSON[entry]['title'];
-
-			    id_link = '<a href=/entries/' + id + '>' + id + '</a>';
-			    title_link = '<a href=/entries/' + id + '>' + title + '</a>';
-
-			    jsonData.responseJSON[entry]['id'] = id_link;
-			    jsonData.responseJSON[entry]['title'] = title_link;
-			}
 			drawTable(json)
 
 		});
 
+		function getKeys(json, field){
+			var keys = Object.keys(json[0])
 
+			var select = document.getElementById(field);
+
+			for (let i = 0; i < keys.length; i++){
+				var key = keys[i]
+				var el = document.createElement("option");
+				el.textContent = key;
+				el.value = key;
+				select.appendChild(el);
+			}
+
+			
+		}
+
+		function addSearch(){
+			var select = document.getElementById("search-box")
+			var div_length = select.getElementsByTagName('div').length;
+			var this_div = div_length + 1
+			var field_id = "field-" + this_div
+			console.log(field_id)
+
+			select.innerHTML += '<div id=' + this_div +'> <label for="field-'+this_div+'"></label> <select id="field-'+this_div+'"> </select> <label for="search-type-'+this_div+'"></label> <select id="search-type-'+this_div+'"> <option value="contains">contains</option> <option value="not-contain">does not contain</option> <option value="equals">is exactly</option> <option value="greater">is greater than</option> <option value="less">is less than</option> </select> <input type="text" id="search-bar-'+this_div+'" placeholder="Content..."><button id="remove-search-' + this_div + '"type="submit" onclick="removeSearch('+this_div+')">-</button></div>'
+			
+			document.getElementById(field_id).innerHTML = document.getElementById('field-1').innerHTML
+
+			}
+
+		function removeSearch(id){
+			document.getElementById(id).outerHTML = ""
+			var select = document.getElementById("search-box")
+			var div_length = select.getElementsByTagName('div').length;
+
+			if(document.getElementById(id+1) !== null){
+				for (let i = id + 1; i <= div_length + 1; i++){
+						console.log(i)
+						console.log(div_length)
+						var demoted = i - 1;
+						document.getElementById(i).outerHTML = '<div id=' + demoted +'> <label for="field-'+demoted+'"></label> <select id="field-'+demoted+'"> </select> <label for="search-type-'+demoted+'"></label> <select id="search-type-'+demoted+'"> <option value="contains">contains</option> <option value="not-contain">does not contain</option> <option value="equals">is exactly</option> <option value="greater">is greater than</option> <option value="less">is less than</option> </select> <input type="text" id="search-bar-'+demoted+'" placeholder="Content..."><button id="remove-search-' + demoted + '"type="submit" onclick="removeSearch('+demoted+')">-</button>'
+						var field = 'field-'+demoted;
+						document.getElementById(field).innerHTML = document.getElementById("field-1").innerHTML
+			}
+		}
+	}
 		
 		function drawTable(json_array){
 			$(document).ready(function() {
 				$('#columns').columns({data:json_array});
 			});
 		}
-
-		function idsToLinks(){
-			for (let i = 0; i < $("tr th").length; i++){
-				if ($("tr th")[i].innerText == 'id'){
-					i = i + 1;
-					var columnQuery = "tr td:nth-child(" + i + ")"
-
-				}
-			}
-			console.log(columnQuery)
-			for (let i = 0; i < $(columnQuery).length; i++){
-				$(columnQuery)[i].innerHTML = '<a href=/entries/' + $(columnQuery)[i].innerHTML + '>' + $(columnQuery)[i].innerHTML + "</a>";
-
-			}
-		}
-
 
 	</script>
 </body>

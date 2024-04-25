@@ -4,8 +4,3 @@ header:
       en      : &EN       About
       # @end locale config
     url: /about.html
-  - titles:
-      # @start locale config
-      en      : &EN       Visualizations
-      # @end locale config
-    url: /visualizations.html
