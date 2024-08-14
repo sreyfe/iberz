@@ -2,6 +2,11 @@
 <html>
 <head>
   <style>
+    #container{
+      min-width: 1200px;
+      padding-right: 5%;
+      padding-left: 5%;
+    }
     #header{
       border-radius: 30px;
       border-width: 1px;
@@ -10,14 +15,14 @@
       padding-bottom: 30px;
       padding-left: 20px;
       padding-right: 20px;
-      margin-left: 5%;
-      margin-right: 5%;
       border-color: #32a852;
       background-color: #fafcfb;
       text-decoration: none;
       color: black;
       overflow-wrap: break-word;
-      min-width: 1200px;
+      min-width: 1000px;
+      margin-left: 5%;
+      margin-right: 5%;
     }
 
   #header a, a:visited{
@@ -46,6 +51,7 @@
   <meta charset="utf-8">
 </head>
 <body>
+  <div id="container">
   <div id="header">
     <div>
       <div id="header_title"><a href="/"><span class="header_entry">Iberz: a database of Yiddish translations</span></a></div>
@@ -90,7 +96,7 @@
     border-collapse: collapse;
     table-layout: fixed;
     width: 100%;
-    min-width: 1200px;
+    min-width: 1000px;
   }
 
   table a:visited {
@@ -139,6 +145,22 @@
                 'author'
                 ],
         threshold: 0.3
+      })
+      getSearch(fuse);
+
+      fuse_all = new Fuse(blooks.responseJSON, {
+        keys: [ 'id',
+                'title',
+                'translator',
+                'year',
+                'location',
+                'publisher',
+                'source_title',
+                'language',
+                'source_id',
+                'author'
+                ],
+        threshold: 1
       })
       getSearch(fuse);
     });
@@ -191,6 +213,7 @@
 
 </fieldset></html>
 
+  </div>
 </body>
 </html>
 
